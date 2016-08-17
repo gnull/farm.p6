@@ -1,0 +1,3 @@
+#!/bin/sh
+
+ncat -vvv -klp 8080 -c '/bin/echo -e "flag NOT_FLAG glaf\nsecond line falg"'
