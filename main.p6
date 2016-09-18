@@ -62,15 +62,17 @@ Usage:
     --targets   Targets list. The format is the same as for nmap
     --port      Target port
     --flagre    Perl6 regex to find flags in <expoit> output
+    --jobs      Number of exploit jobs that run in parallel (defaults to 1)
     }
 }
 
 sub MAIN(Str $exploit, Str :$targets = '127.0.0.0-2',
-	 Int :$port = 8080, Str :$flagre = '<[flag]>+') {
+	 Int :$port = 8080, Str :$flagre = '<[flag]>+',
+	 Int :$jobs = 1) {
 
     my @targets = nmap_filter $targets, $port;
 
-    for |@targets xx Inf -> $target {
+    for (|@targets xx Inf).hyper(batch => 1, degree => $jobs) -> $target {
 	my @flags = exploit $exploit, $target, $port, $flagre;
 	log "flag", @flags, style => 'underline cyan on_black';
     }
