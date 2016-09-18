@@ -47,7 +47,7 @@ sub log(Str $pref, @lines, :$style = '') {
 sub exploit(Str $exploit, Str $target, Int $port, Str $flagre) {
     my $p = shell qq{ $exploit "$target" "$port" }, :out, :err;
 
-    log "$exploit", $p.err.lines, style => 'bold';
+    log "exploit", $p.err.lines, style => 'bold';
 
     $p.out.lines
     ==> map({ $_ ~~ / [$<flags> = <$flagre>] + % [.*?] / ?? |$<flags> !! |[] })
