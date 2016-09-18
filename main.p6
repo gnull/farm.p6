@@ -26,7 +26,7 @@ grammar Nmap {
 
 &shell.wrap: -> |capt {
     my Str $cmd = capt.list[0];
-    log "shell", $cmd.lines, style => 'red';
+    log "shell", $cmd.lines, style => 'underline';
     callsame
 }
 
