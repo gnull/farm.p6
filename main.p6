@@ -70,7 +70,7 @@ sub MAIN(Str $exploit, Str :$targets = '127.0.0.0-2',
 
     my @targets = nmap_filter $targets, $port;
 
-    for @targets -> $target {
+    for |@targets xx Inf -> $target {
 	my @flags = exploit $exploit, $target, $port, $flagre;
 	log "flag", @flags, style => 'underline cyan on_black';
     }
