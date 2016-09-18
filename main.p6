@@ -24,6 +24,12 @@ grammar Nmap {
     regex rn { <-[\n]> * }
 };
 
+&shell.wrap: -> |capt {
+    my Str $cmd = capt.list[0];
+    log "shell", $cmd.lines, style => 'red';
+    callsame
+}
+
 sub nmap_filter(Str $targets, Int $port) {
     my $p = shell qq{ nmap -T5 -n -p "$port" "$targets" }, :out;
     my $out = $p.out.slurp-rest;
